@@ -1,24 +1,19 @@
 'use strict';
 
-// Initiating our server
-const express = require('express');
-const app = express();
-const dotenv = require('dotenv');
+// Import app/server start from app.js
+
+const init = require('./src/app.js').init;
+
+// Import app-level dependencies
 const mongoose = require('mongoose');
-
-// Import routes
-const authRoute = require('./routes/auth.js');
-
-dotenv.config();
-
+const options = {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+};
 // Connect to DB
-mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true },
-    () => console.log ('Connected to DB, Gina'));
+mongoose.connect(process.env.DB_CONNECT, options, () => {
+    console.log ('Connected to DB, Gina');
+});
 
-// Middleware
-app.use(express.json());
-
-// Route middleware
-app.use('/api/user', authRoute);
-
-app.listen(3000, () => console.log('Server up and running, Gina'));
+init(process.env.PORT || 3000);

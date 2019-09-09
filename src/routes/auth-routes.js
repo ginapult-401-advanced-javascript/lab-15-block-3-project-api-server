@@ -32,4 +32,4 @@ function signin (request, response) {
   response.status(200).json( request.token );
 }
 
-module.exports = authRoutes;
+module.exports = authRouter;
